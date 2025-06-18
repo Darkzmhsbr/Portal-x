@@ -1,0 +1,413 @@
+/* 
+  Estilos do Modal - A Janela Pop-up Universal
+  
+  Como fazer uma janela modal perfeita:
+  - Overlay escuro que cobre tudo (como uma cortina)
+  - Caixa central que chama atenção
+  - Animações suaves de entrada/saída
+  - Responsivo em qualquer tela
+*/
+
+/* Overlay - a cortina escura */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+/* Modal principal - a caixa mágica */
+.modal {
+  background: var(--color-surface);
+  border-radius: 16px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* === TAMANHOS DO MODAL === */
+.modal--small {
+  max-width: 400px;
+}
+
+.modal--medium {
+  max-width: 600px;
+}
+
+.modal--large {
+  max-width: 900px;
+}
+
+.modal--fullscreen {
+  max-width: 100%;
+  max-height: 100%;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* === VARIANTES DE CORES === */
+.modal--default {
+  border-top: 4px solid var(--color-primary);
+}
+
+.modal--success {
+  border-top: 4px solid #10B981;
+}
+
+.modal--error {
+  border-top: 4px solid #EF4444;
+}
+
+.modal--warning {
+  border-top: 4px solid #F59E0B;
+}
+
+.modal--info {
+  border-top: 4px solid #3B82F6;
+}
+
+/* === CABEÇALHO DO MODAL === */
+.modal__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Ícone do modal */
+.modal__icon {
+  flex-shrink: 0;
+}
+
+.icon-success { color: #10B981; }
+.icon-error { color: #EF4444; }
+.icon-warning { color: #F59E0B; }
+.icon-info { color: #3B82F6; }
+
+/* Título */
+.modal__title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Botão fechar */
+.modal__close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  transform: rotate(90deg);
+}
+
+/* === CONTEÚDO DO MODAL === */
+.modal__content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  /* Scrollbar customizada */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.modal__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal__content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.modal__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Loading state */
+.modal__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  color: var(--color-text-secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* === RODAPÉ DO MODAL === */
+.modal__footer {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: flex-end;
+}
+
+/* Botões de ação */
+.modal__action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Variantes dos botões */
+.modal__action--primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.modal__action--primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.modal__action--secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-secondary);
+}
+
+.modal__action--secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-text-primary);
+}
+
+.modal__action--danger {
+  background: #EF4444;
+  color: white;
+}
+
+.modal__action--danger:hover:not(:disabled) {
+  background: #DC2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Estado desabilitado */
+.modal__action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ícone do botão */
+.action-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* === ESTILOS ESPECÍFICOS === */
+
+/* Mensagens de confirmação e alerta */
+.confirm-message,
+.alert-message {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* === FORMULÁRIO DE CANAL === */
+.channel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Placeholder */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Select customizado */
+.form-group select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+  appearance: none;
+}
+
+/* Textarea */
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Linha com dois campos */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Input de arquivo */
+.form-group input[type="file"] {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Texto pequeno de ajuda */
+.form-group small {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* === ANIMAÇÕES === */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Efeito de onda nos botões */
+.modal__action::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.modal__action:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 640px) {
+  .modal {
+    margin: 0.5rem;
+    max-height: calc(100vh - 1rem);
+  }
+  
+  .modal__header {
+    padding: 1rem;
+  }
+  
+  .modal__title {
+    font-size: 1.1rem;
+  }
+  
+  .modal__content {
+    padding: 1rem;
+  }
+  
+  .modal__footer {
+    padding: 1rem;
+    flex-direction: column-reverse;
+  }
+  
+  .modal__action {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Modo paisagem em mobile */
+@media (max-height: 500px) {
+  .modal {
+    max-height: 100vh;
+  }
+  
+  .modal__content {
+    padding: 1rem;
+  }
+}

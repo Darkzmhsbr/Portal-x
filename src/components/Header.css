@@ -1,0 +1,459 @@
+/* 
+  Estilos do Header - A Barra de Navegação
+  
+  Pense no header como o painel de um carro moderno:
+  - Fixo no topo (sempre visível)
+  - Muda de cor quando você rola a página
+  - Se adapta em celulares com menu hambúrguer
+*/
+
+/* Header principal - a barra fixa no topo */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height, 70px);
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Header quando você rola a página - fica mais sólido */
+.header--scrolled {
+  background: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Container interno - centraliza o conteúdo */
+.header__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo - a identidade visual */
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.header__logo:hover {
+  transform: translateY(-2px);
+}
+
+/* X vermelho do logo */
+.logo-x {
+  color: var(--color-primary);
+  font-size: 2rem;
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  display: inline-block;
+}
+
+/* Texto do logo */
+.logo-text {
+  color: var(--color-text-primary);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+/* Navegação desktop - os links principais */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Links de navegação */
+.nav-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+/* Hover nos links - efeito suave */
+.nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* Link ativo - mostra onde você está */
+.nav-link.active {
+  color: var(--color-primary);
+}
+
+/* Linha embaixo do link ativo */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* Link destacado (Premium/Admin) */
+.nav-link.highlight {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Badge do link (🔥 ou ⚡) */
+.badge {
+  margin-left: 0.25rem;
+  font-size: 0.85rem;
+}
+
+/* Container das ações do usuário */
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botões de autenticação */
+.auth-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Botão de login */
+.btn-login {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Botão de registro - mais chamativo */
+.btn-register {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* === MENU DO USUÁRIO === */
+.user-menu {
+  position: relative;
+}
+
+/* Botão do usuário */
+.user-menu__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-menu__trigger:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Avatar do usuário */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Badge de admin */
+.admin-badge {
+  color: #FCD34D;
+  margin-left: 0.25rem;
+}
+
+/* Dropdown do usuário */
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 200px;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+/* Mostra dropdown no hover */
+.user-menu:hover .user-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Items do dropdown */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+}
+
+/* Divisor no dropdown */
+.dropdown-divider {
+  margin: 0.5rem 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === MENU MOBILE === */
+.header__mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Menu mobile - lateral */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  max-width: 80vw;
+  height: 100vh;
+  background: var(--color-surface);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho do menu mobile */
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu__header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.mobile-menu__close {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Navegação mobile */
+.mobile-menu__nav {
+  flex: 1;
+  padding: 1rem 0;
+  overflow-y: auto;
+}
+
+/* Links mobile */
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu__link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+}
+
+.mobile-menu__link.active {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--color-primary);
+  border-left: 3px solid var(--color-primary);
+}
+
+/* Rodapé do menu mobile */
+.mobile-menu__footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Perfil no mobile */
+.mobile-menu__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.profile-name {
+  display: block;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.profile-role {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* Botão logout mobile */
+.mobile-menu__logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  color: #EF4444;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Overlay do menu mobile */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+/* Badge de notificação */
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Esconde elementos desktop no mobile */
+.desktop-only {
+  display: flex;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .header__mobile-toggle {
+    display: block;
+  }
+  
+  .header__container {
+    padding: 0 1rem;
+  }
+  
+  .header__logo {
+    font-size: 1.25rem;
+  }
+  
+  .logo-x {
+    font-size: 1.75rem;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+}

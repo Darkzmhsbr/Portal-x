@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal-X Brasil - Ativador de Desenvolvimento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    h1, h2 {
+      color: #90caf9;
+    }
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+    button.danger {
+      background-color: #d32f2f;
+    }
+    button.danger:hover {
+      background-color: #b71c1c;
+    }
+    button.success {
+      background-color: #2e7d32;
+    }
+    button.success:hover {
+      background-color: #1b5e20;
+    }
+    .success-text {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .warning-text {
+      color: #ff9800;
+      font-weight: bold;
+    }
+    .error-text {
+      color: #f44336;
+      font-weight: bold;
+    }
+    pre {
+      background-color: #212121;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Portal-X Brasil - Ativador de Desenvolvimento</h1>
+  <p>Esta ferramenta permite testar o frontend sem precisar de um backend funcionando.</p>
+  
+  <div class="card">
+    <h2>Modo de Usuário</h2>
+    <p>Ativa um usuário comum para testes:</p>
+    <button onclick="activateUserMode()" class="success">Ativar Modo Usuário</button>
+    <div id="userStatus"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Modo de Administrador</h2>
+    <p>Ativa um usuário administrador para testes:</p>
+    <button onclick="activateAdminMode()" class="success">Ativar Modo Admin</button>
+    <div id="adminStatus"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Desativar Tudo</h2>
+    <p>Remove todas as configurações de desenvolvimento:</p>
+    <button onclick="deactivateAll()" class="danger">Desativar Modo de Desenvolvimento</button>
+    <div id="resetStatus"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Status Atual</h2>
+    <pre id="currentStatus">Carregando...</pre>
+  </div>
+  
+  <div class="card">
+    <h2>Próximos Passos</h2>
+    <p>Depois de ativar o modo de desenvolvimento:</p>
+    <ol>
+      <li>Clique no botão abaixo para ir para o Portal-X</li>
+      <li>As páginas de login, registro, admin e outras funcionarão sem backend</li>
+    </ol>
+    <button onclick="goToPortal()">Ir para o Portal-X</button>
+  </div>
+
+  <script>
+    // Função para ativar modo usuário
+    function activateUserMode() {
+      // Configurar usuário
+      const userObject = {
+        id: 'dev-123',
+        name: 'Usuário Teste',
+        email: 'teste@exemplo.com',
+        status: 'active',
+        role: 'user'
+      };
+      
+      // Salvar no localStorage
+      localStorage.setItem('dev_user', JSON.stringify(userObject));
+      localStorage.setItem('dev_bypass_auth', 'true');
+      localStorage.setItem('dev_user_role', 'user');
+      
+      // Bypass de código de acesso
+      localStorage.setItem('dev_bypass_code', 'true');
+      localStorage.setItem('dev_code_type', 'user');
+      localStorage.setItem('userCodeVerified', 'true');
+      localStorage.setItem('adminCodeVerified', 'true');
+      
+      document.getElementById('userStatus').innerHTML = 
+        '<p class="success-text">✅ Modo Usuário ATIVADO!</p>';
+      
+      updateStatus();
+    }
+    
+    // Função para ativar modo admin
+    function activateAdminMode() {
+      // Configurar admin
+      const adminObject = {
+        id: 'dev-admin',
+        name: 'Administrador Teste',
+        email: 'admin@exemplo.com',
+        status: 'active',
+        role: 'admin'
+      };
+      
+      // Salvar no localStorage
+      localStorage.setItem('dev_user', JSON.stringify(adminObject));
+      localStorage.setItem('dev_bypass_auth', 'true');
+      localStorage.setItem('dev_user_role', 'admin');
+      
+      // Bypass de código de acesso
+      localStorage.setItem('dev_bypass_code', 'true');
+      localStorage.setItem('dev_code_type', 'admin');
+      localStorage.setItem('userCodeVerified', 'true');
+      localStorage.setItem('adminCodeVerified', 'true');
+      
+      document.getElementById('adminStatus').innerHTML = 
+        '<p class="success-text">✅ Modo Administrador ATIVADO!</p>';
+      
+      updateStatus();
+    }
+    
+    // Função para desativar tudo
+    function deactivateAll() {
+      // Remover todas as chaves
+      localStorage.removeItem('dev_user');
+      localStorage.removeItem('dev_bypass_auth');
+      localStorage.removeItem('dev_user_role');
+      localStorage.removeItem('dev_bypass_code');
+      localStorage.removeItem('dev_code_type');
+      localStorage.removeItem('userCodeVerified');
+      localStorage.removeItem('adminCodeVerified');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      document.getElementById('resetStatus').innerHTML = 
+        '<p class="success-text">✅ Todos os dados foram limpos!</p>';
+      
+      updateStatus();
+    }
+    
+    // Função para ir para o portal
+    function goToPortal() {
+      window.location.href = '/';
+    }
+    
+    // Atualizar status atual
+    function updateStatus() {
+      const devUser = localStorage.getItem('dev_user');
+      const devBypassAuth = localStorage.getItem('dev_bypass_auth');
+      const devBypassCode = localStorage.getItem('dev_bypass_code');
+      const userRole = localStorage.getItem('dev_user_role');
+      
+      let userInfo = '';
+      try {
+        if (devUser) {
+          const user = JSON.parse(devUser);
+          userInfo = `Nome: ${user.name}\nEmail: ${user.email}\nTipo: ${user.role}`;
+        }
+      } catch (e) {
+        userInfo = 'Erro ao ler dados do usuário';
+      }
+      
+      document.getElementById('currentStatus').innerHTML = 
+        'dev_bypass_auth: ' + (devBypassAuth || 'não definido') + '\n' +
+        'dev_bypass_code: ' + (devBypassCode || 'não definido') + '\n' +
+        'dev_user_role: ' + (userRole || 'não definido') + '\n\n' +
+        (userInfo ? 'Informações do usuário:\n' + userInfo : 'Nenhum usuário configurado');
+    }
+    
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', updateStatus);
+  </script>
+</body>
+</html> 

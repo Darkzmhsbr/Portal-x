@@ -1,0 +1,488 @@
+/* 
+  Estilos do ChannelCard - Os Cards estilo Netflix
+  
+  Imagine que cada card é como uma vitrine de loja:
+  - A imagem chama atenção (com blur misterioso)
+  - As informações convencem
+  - O hover faz a mágica acontecer
+  
+  Vamos deixar tudo irresistível! 🔥
+*/
+
+/* Card principal - a moldura da nossa arte */
+.channel-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hover no card - sobe e brilha */
+.channel-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+/* === CONTAINER DA IMAGEM === */
+.channel-card__image {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* Proporção 16:9 */
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Imagem real */
+.channel-card__image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom suave no hover */
+.channel-card:hover .channel-card__image img {
+  transform: scale(1.1);
+}
+
+/* Placeholder quando não tem imagem */
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  color: var(--color-text-muted);
+}
+
+/* Overlay com blur - cria o mistério */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  backdrop-filter: blur(2px);
+  transition: all 0.3s ease;
+}
+
+/* Remove blur no hover - revela a imagem */
+.image-overlay.hovered {
+  backdrop-filter: blur(0px);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* Badge Premium no canto */
+.premium-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+  color: #000;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+/* Botão de ação no hover */
+.hover-action {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.unlock-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+}
+
+.unlock-button:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(220, 38, 38, 0.6);
+}
+
+/* === CONTEÚDO DO CARD === */
+.channel-card__content {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Meta informações (categoria e estado) */
+.channel-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.channel-category {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--color-primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.channel-location {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-text-muted);
+}
+
+/* Nome do canal */
+.channel-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.3;
+}
+
+/* Badge de verificado */
+.verified-badge {
+  background: #10B981;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+/* Descrição (só em cards featured) */
+.channel-description {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* === ESTATÍSTICAS === */
+.channel-stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.stat-item svg {
+  opacity: 0.7;
+}
+
+/* Item de nível com cor especial */
+.stat-item.level {
+  font-weight: 600;
+}
+
+.level-icon {
+  font-size: 1rem;
+}
+
+.level-label {
+  font-size: 0.8rem;
+}
+
+/* === BOTÃO DE AÇÃO === */
+.channel-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+/* Botão free */
+.channel-action.free {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.channel-action.free:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* Botão premium */
+.channel-action.premium {
+  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+  color: #000;
+}
+
+.channel-action.premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
+}
+
+/* === INDICADORES VISUAIS === */
+.channel-indicators {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.indicator.premium {
+  background: rgba(251, 191, 36, 0.2);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  color: #FCD34D;
+}
+
+.indicator.hot {
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.5);
+  color: var(--color-primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* === VARIANTE COMPACTA === */
+.channel-card--compact {
+  flex-direction: row;
+  height: auto;
+}
+
+.channel-card--compact .channel-card__image {
+  width: 120px;
+  padding-top: 0;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.channel-card--compact .channel-card__content {
+  padding: 1rem;
+}
+
+.channel-card--compact .channel-name {
+  font-size: 0.95rem;
+}
+
+.channel-stats-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* === VARIANTE FEATURED === */
+.channel-card--featured {
+  grid-column: span 2;
+}
+
+.channel-card--featured .channel-card__content {
+  padding: 1.5rem;
+}
+
+.channel-card--featured .channel-name {
+  font-size: 1.3rem;
+}
+
+/* === SKELETON LOADING === */
+.channel-card--skeleton {
+  background: var(--color-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.skeleton-image {
+  width: 100%;
+  padding-top: 56.25%;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-meta,
+.skeleton-title,
+.skeleton-stats,
+.skeleton-button {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-meta {
+  height: 20px;
+  width: 30%;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 70%;
+}
+
+.skeleton-stats {
+  height: 16px;
+  width: 50%;
+}
+
+.skeleton-button {
+  height: 40px;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* === GRID DE CARDS === */
+.channel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* Animação shimmer para skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Animação pulse */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  .channel-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .channel-card--featured {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .channel-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .channel-card__content {
+    padding: 1rem;
+  }
+  
+  .channel-name {
+    font-size: 1rem;
+  }
+}

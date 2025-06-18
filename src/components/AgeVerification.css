@@ -1,0 +1,288 @@
+/* 
+  Estilos da Verificação de Idade
+  
+  Pense nisso como maquiagem para o componente:
+  - Overlay: o fundo escuro que cobre tudo
+  - Modal: a caixa central onde acontece a mágica
+  - Animações: os efeitos que impressionam
+*/
+
+/* Overlay - o fundo escuro que bloqueia tudo */
+.age-verification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px); /* Desfoque bonito no fundo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000; /* Fica acima de TUDO */
+  padding: 1rem;
+}
+
+/* Modal principal - a estrela do show */
+.age-verification-modal {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    #1a1a1a 100%
+  );
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Efeito de brilho no fundo */
+.age-verification-modal::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.1) 0%,
+    transparent 70%
+  );
+  animation: rotate 20s linear infinite;
+}
+
+/* Container da pergunta */
+.age-verification__question {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ícone de aviso */
+.verification-icon {
+  margin-bottom: 1.5rem;
+}
+
+.icon-warning {
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.5));
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Título principal */
+.verification-title {
+  font-size: 2.5rem;
+  color: var(--color-text-primary);
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Subtítulo */
+.verification-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 2rem 0;
+}
+
+/* Texto de destaque */
+.verification-text {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.verification-text p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.highlight-text {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Container dos botões */
+.age-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+/* Botões de idade */
+.age-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Botão de confirmação - verde/sucesso */
+.age-button--confirm {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+}
+
+.age-button--confirm:hover {
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Botão de negação - vermelho */
+.age-button--deny {
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+}
+
+.age-button--deny:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #EF4444;
+}
+
+/* Aviso legal */
+.verification-warning {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 1rem 0 0 0;
+  opacity: 0.7;
+}
+
+/* === TELA DE CARREGAMENTO === */
+.age-verification__loading {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Círculo de progresso */
+.progress-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.progress-circle svg {
+  transform: rotate(-90deg);
+}
+
+/* Número do countdown */
+.countdown-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+/* Mensagem de carregamento */
+.loading-message {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  min-height: 30px;
+}
+
+/* === TELA DE RESULTADO === */
+.age-verification__result {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Ícones de resultado */
+.result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.result-icon.success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid #10B981;
+  color: #10B981;
+}
+
+.result-icon.denied {
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid #EF4444;
+  color: #EF4444;
+}
+
+/* Título do resultado */
+.result-title {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text-primary);
+}
+
+/* Mensagem do resultado */
+.result-message {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Animações */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Responsividade - Mobile First */
+@media (max-width: 640px) {
+  .age-verification-modal {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .verification-title {
+    font-size: 2rem;
+  }
+  
+  .age-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .countdown-number {
+    font-size: 2.5rem;
+  }
+}

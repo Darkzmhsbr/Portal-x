@@ -1,0 +1,161 @@
+/* 
+  Estilos da Tela de Carregamento
+  
+  Vou explicar cada parte como se fosse uma receita de bolo:
+  - Container principal: a moldura que segura tudo
+  - Logo: o coração visual da marca
+  - Animações: o tempero que dá vida
+*/
+
+/* Container principal - ocupa toda a tela ou área definida */
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  position: relative;
+  min-height: 200px;
+  padding: 2rem;
+}
+
+/* Versão tela cheia - cobre tudo como um cobertor */
+.loading-screen--fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* Fica acima de tudo */
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+/* Container do conteúdo - centraliza tudo bonitinho */
+.loading-screen__content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Logo estilizado - a identidade visual */
+.loading-screen__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  user-select: none; /* Impede seleção do texto */
+}
+
+/* X vermelho vibrante */
+.logo-x {
+  color: var(--color-primary);
+  font-size: 4rem;
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Texto "Portal" elegante */
+.logo-text {
+  color: var(--color-text-primary);
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* Container dos pontos animados */
+.loading-screen__dots {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Cada pontinho de carregamento */
+.loading-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+}
+
+/* Mensagem de carregamento */
+.loading-screen__message {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+/* Mensagem animada especial */
+.loading-message-animated {
+  display: inline-block;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+/* Barra de progresso */
+.loading-screen__progress {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary),
+    transparent
+  );
+  width: 200px;
+  margin-top: 1rem;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animações customizadas */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Responsividade - se adapta em telas menores */
+@media (max-width: 768px) {
+  .loading-screen__logo {
+    font-size: 2rem;
+  }
+  
+  .logo-x {
+    font-size: 3rem;
+  }
+  
+  .logo-text {
+    font-size: 1.8rem;
+  }
+  
+  .loading-screen__message {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tema escuro específico para loading */
+.loading-screen {
+  --loading-bg: #0a0a0a;
+  --loading-surface: #1a1a1a;
+  background: radial-gradient(
+    circle at center,
+    var(--loading-surface) 0%,
+    var(--loading-bg) 100%
+  );
+}
